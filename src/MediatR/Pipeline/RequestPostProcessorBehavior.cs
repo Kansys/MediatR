@@ -3,6 +3,7 @@ namespace MediatR.Pipeline
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
+    using System.Linq;
 
     /// <summary>
     /// Behavior for executing all <see cref="IRequestPostProcessor{TRequest,TResponse}"/> instances after handling the request
@@ -21,7 +22,11 @@ namespace MediatR.Pipeline
         {
             var response = await next().ConfigureAwait(false);
 
-            foreach (var processor in _postProcessors)
+            var requestProcessors = _postProcessors;
+#if NET
+            requestProcessors = requestProcessors.OrderBy(p => p.Order);
+#endif
+            foreach (var processor in requestProcessors)
             {
                 await processor.Process(request, response, cancellationToken).ConfigureAwait(false);
             }

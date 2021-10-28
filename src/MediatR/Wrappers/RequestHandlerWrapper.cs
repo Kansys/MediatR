@@ -54,6 +54,9 @@ namespace MediatR.Wrappers
             return serviceFactory
                 .GetInstances<IPipelineBehavior<TRequest, TResponse>>()
                 .Reverse()
+#if NET
+                .OrderBy(p => p.Order)
+#endif
                 .Aggregate((RequestHandlerDelegate<TResponse>) Handler, (next, pipeline) => () => pipeline.Handle((TRequest)request, cancellationToken, next))();
         }
     }

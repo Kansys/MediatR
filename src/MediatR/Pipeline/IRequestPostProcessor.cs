@@ -10,6 +10,13 @@ namespace MediatR.Pipeline
     /// <typeparam name="TResponse">Response type</typeparam>
     public interface IRequestPostProcessor<in TRequest, in TResponse> where TRequest : notnull
     {
+#if NET
+        /// <summary>
+        /// Ordering for the post-request handlers.  Smaller numbers execute sooner.
+        /// </summary>
+        int Order => 0;
+#endif
+
         /// <summary>
         /// Process method executes after the Handle method on your handler
         /// </summary>

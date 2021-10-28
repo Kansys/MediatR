@@ -19,6 +19,12 @@ namespace MediatR
     /// <typeparam name="TResponse">Response type</typeparam>
     public interface IPipelineBehavior<in TRequest, TResponse> where TRequest : notnull
     {
+#if NET
+        /// <summary>
+        /// Ordering for the pipeline behaviors.  Smaller numbers execute sooner.
+        /// </summary>
+        int Order => 0;
+#endif
         /// <summary>
         /// Pipeline handler. Perform any additional behavior and await the <paramref name="next"/> delegate as necessary
         /// </summary>
