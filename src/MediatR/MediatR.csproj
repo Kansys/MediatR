@@ -21,6 +21,8 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <Deterministic>true</Deterministic>
     <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+    <RepositoryUrl>https://github.com/Kansys/MediatR</RepositoryUrl>
+    <MinVerDefaultPreReleasePhase>kansys</MinVerDefaultPreReleasePhase>
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
